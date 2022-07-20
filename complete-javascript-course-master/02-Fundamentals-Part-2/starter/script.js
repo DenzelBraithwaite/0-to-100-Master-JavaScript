@@ -79,3 +79,14 @@ for (let i = 0; i < bills.length; i++) {
 }
 
 console.log(bills, tips, totals);
+
+const newcalcAverage = (array) => {
+    let sum = 0;
+    for(let i = 0; i < array.length; i++) {
+        sum += array[i]
+    }
+    return sum / array.length
+};
+
+console.log(newcalcAverage(totals));
+console.log(newcalcAverage(tips));
