@@ -2,8 +2,6 @@
 
 const check = document.querySelector('.check');
 let secretNumber = Math.ceil(Math.random() * 20);
-const number = document.querySelector('.number').textContent;
-
 let currentScore = 20;
 let currentHighscore = 0;
 const resetButton = document.querySelector('.again');
@@ -41,6 +39,12 @@ const preventNegative = () => {
   }
 };
 
+const updateScore = message => {
+  currentScore--;
+  document.querySelector('.score').textContent = currentScore;
+  document.querySelector('.message').textContent = message;
+};
+
 const compareNumber = guess => {
   // When player's score is 0
   if (!currentScore) {
@@ -67,15 +71,11 @@ const compareNumber = guess => {
 
     // When player guesses too high
   } else if (guess > secretNumber) {
-    currentScore--;
-    document.querySelector('.score').textContent = currentScore;
-    document.querySelector('.message').textContent = 'Too high👇🏾👇🏾👇🏾';
+    updateScore('Too high👇🏾👇🏾👇🏾');
 
     // When player guesses too low
   } else {
-    currentScore--;
-    document.querySelector('.score').textContent = currentScore;
-    document.querySelector('.message').textContent = 'Too low☝🏾☝🏾☝🏾';
+    updateScore('Too low☝🏾☝🏾☝🏾');
   }
 };
 
