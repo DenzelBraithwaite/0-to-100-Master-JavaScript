@@ -8,6 +8,9 @@ const resetButton = document.querySelector('.again');
 let gameOver = false;
 
 // document.querySelector('.number').textContent = secretNumber;
+const setMessage = message => {
+  document.querySelector('.message').textContent = message;
+};
 
 const setHighscore = score => {
   if (score > currentHighscore) {
@@ -23,7 +26,7 @@ const resetGame = () => {
 
   document.querySelector('.number').textContent = '?';
   document.querySelector('.score').textContent = currentScore;
-  document.querySelector('.message').textContent = 'Start guessing...';
+  setMessage('Start guessing...');
   document.querySelector('body').style.backgroundColor = '#222';
   document.querySelector('.number').style.width = '15rem';
   document.querySelector('.guess').value = '';
@@ -34,15 +37,14 @@ const preventNegative = () => {
   if (currentScore <= 0) {
     currentScore = 0;
     document.querySelector('body').style.backgroundColor = '#c92a2a';
-    document.querySelector('.message').textContent =
-      'Sorry, you lose. Try again?🥺';
+    setMessage('Sorry, you lose. Try again?🥺');
   }
 };
 
 const updateScore = message => {
   currentScore--;
   document.querySelector('.score').textContent = currentScore;
-  document.querySelector('.message').textContent = message;
+  setMessage(message);
 };
 
 const compareNumber = guess => {
@@ -52,13 +54,11 @@ const compareNumber = guess => {
 
     // When player has already won
   } else if (gameOver) {
-    document.querySelector('.message').textContent =
-      '🥳You already won, press "Again" to play again!';
+    setMessage('🥳You already won, press "Again" to play again!');
 
     // When player's guess is illegal
   } else if (!guess || guess < 1 || guess > 20) {
-    document.querySelector('.message').textContent =
-      '🛑 Did you enter a number between 1 and 20?';
+    setMessage('🛑 Did you enter a number between 1 and 20?');
 
     // When player guesses correctly
   } else if (guess === secretNumber) {
@@ -66,7 +66,7 @@ const compareNumber = guess => {
     gameOver = true;
     document.querySelector('body').style.backgroundColor = '#60b347';
     document.querySelector('.number').style.width = '30rem';
-    document.querySelector('.message').textContent = 'Congrats!🎉🎉🎉';
+    setMessage('Congrats!🎉🎉🎉');
     document.querySelector('.number').textContent = secretNumber;
 
     // When player guesses too high
