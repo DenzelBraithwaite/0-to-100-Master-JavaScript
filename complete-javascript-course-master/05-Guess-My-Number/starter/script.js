@@ -1,13 +1,13 @@
 'use strict';
 
 const check = document.querySelector('.check');
-// let message = document.querySelector('.message').textContent;
 let secretNumber = Math.ceil(Math.random() * 20);
 const number = document.querySelector('.number').textContent;
 
 let currentScore = 20;
 let currentHighscore = 0;
 const resetButton = document.querySelector('.again');
+let gameOver = false;
 
 document.querySelector('.number').textContent = secretNumber;
 
@@ -18,39 +18,45 @@ const setHighscore = score => {
   }
 };
 
-const setScore = () => {
-  document.querySelector('.score').textContent = currentScore;
-};
-
 const resetGame = () => {
   secretNumber = Math.ceil(Math.random() * 20);
   currentScore = 20;
+  gameOver = false;
 
   document.querySelector('.number').textContent = secretNumber;
-  setScore();
+  document.querySelector('.score').textContent = currentScore;
+  document.querySelector('.message').textContent = 'Start guessing...';
 };
 
-const preventNegative = number => {
-  number <= 0 ? (number = 0) : (number = number);
-  return number;
+const preventNegative = () => {
+  currentScore--;
+  if (currentScore <= 0) {
+    currentScore = 0;
+    document.querySelector('.message').textContent =
+      '😭Sorry, you lose. Try again?🥺';
+  }
 };
 
 const compareNumber = guess => {
-  if (!guess) {
+  if (!currentScore) {
+    preventNegative(currentScore);
+  } else if (gameOver) {
     document.querySelector('.message').textContent =
-      '🛑 Did you enter a number?';
+      '🥳You already won, press "Again" to play again!';
+  } else if (!guess || guess < 1 || guess > 20) {
+    document.querySelector('.message').textContent =
+      '🛑 Did you enter a number between 1 and 20?';
   } else if (guess === secretNumber) {
     setHighscore(currentScore);
+    gameOver = true;
     document.querySelector('.message').textContent = 'Congrats!🎉🎉🎉';
   } else if (guess > secretNumber) {
     currentScore--;
-    currentScore = preventNegative(currentScore);
-    setScore(currentScore);
+    document.querySelector('.score').textContent = currentScore;
     document.querySelector('.message').textContent = 'Too high👇🏾👇🏾👇🏾';
   } else {
     currentScore--;
-    currentScore = preventNegative(currentScore);
-    setScore(currentScore);
+    document.querySelector('.score').textContent = currentScore;
     document.querySelector('.message').textContent = 'Too low☝🏾☝🏾☝🏾';
   }
 };
