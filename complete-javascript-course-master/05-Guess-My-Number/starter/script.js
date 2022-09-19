@@ -30,6 +30,11 @@ const resetGame = () => {
   setScore();
 };
 
+const preventNegative = number => {
+  number <= 0 ? (number = 0) : (number = number);
+  return number;
+};
+
 const compareNumber = guess => {
   if (!guess) {
     document.querySelector('.message').textContent =
@@ -39,10 +44,12 @@ const compareNumber = guess => {
     document.querySelector('.message').textContent = 'Congrats!🎉🎉🎉';
   } else if (guess > secretNumber) {
     currentScore--;
+    currentScore = preventNegative(currentScore);
     setScore(currentScore);
     document.querySelector('.message').textContent = 'Too high👇🏾👇🏾👇🏾';
   } else {
     currentScore--;
+    currentScore = preventNegative(currentScore);
     setScore(currentScore);
     document.querySelector('.message').textContent = 'Too low☝🏾☝🏾☝🏾';
   }
