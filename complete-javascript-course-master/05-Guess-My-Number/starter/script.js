@@ -9,7 +9,7 @@ let currentHighscore = 0;
 const resetButton = document.querySelector('.again');
 let gameOver = false;
 
-document.querySelector('.number').textContent = secretNumber;
+// document.querySelector('.number').textContent = secretNumber;
 
 const setHighscore = score => {
   if (score > currentHighscore) {
@@ -23,7 +23,7 @@ const resetGame = () => {
   currentScore = 20;
   gameOver = false;
 
-  document.querySelector('.number').textContent = secretNumber;
+  document.querySelector('.number').textContent = '?';
   document.querySelector('.score').textContent = currentScore;
   document.querySelector('.message').textContent = 'Start guessing...';
   document.querySelector('body').style.backgroundColor = '#222';
@@ -34,9 +34,9 @@ const preventNegative = () => {
   currentScore--;
   if (currentScore <= 0) {
     currentScore = 0;
-    document.querySelector('body').style.backgroundColor = '#f03e3e';
+    document.querySelector('body').style.backgroundColor = '#c92a2a';
     document.querySelector('.message').textContent =
-      '😭Sorry, you lose. Try again?🥺';
+      'Sorry, you lose. Try again?🥺';
   }
 };
 
@@ -62,6 +62,7 @@ const compareNumber = guess => {
     document.querySelector('body').style.backgroundColor = '#60b347';
     document.querySelector('.number').style.width = '30rem';
     document.querySelector('.message').textContent = 'Congrats!🎉🎉🎉';
+    document.querySelector('.number').textContent = secretNumber;
 
     // When player guesses too high
   } else if (guess > secretNumber) {

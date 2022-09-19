@@ -82,6 +82,10 @@ h1 {
   left: 2rem;
 }
 
+form {
+  text-align: center;
+}
+
 .guess {
   background: none;
   border: 4px solid #eee;
