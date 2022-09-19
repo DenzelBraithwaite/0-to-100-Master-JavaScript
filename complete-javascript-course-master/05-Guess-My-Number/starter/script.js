@@ -69,13 +69,9 @@ const compareNumber = guess => {
     setMessage('Congrats!🎉🎉🎉');
     document.querySelector('.number').textContent = secretNumber;
 
-    // When player guesses too high
-  } else if (guess > secretNumber) {
-    updateScore('Too high👇🏾👇🏾👇🏾');
-
-    // When player guesses too low
+    // When player guesses too high or too low
   } else {
-    updateScore('Too low☝🏾☝🏾☝🏾');
+    updateScore(guess > secretNumber ? 'Too high👇🏾👇🏾👇🏾' : 'Too low☝🏾☝🏾☝🏾');
   }
 };
 
