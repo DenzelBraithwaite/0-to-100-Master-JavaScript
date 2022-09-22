@@ -1,26 +1,41 @@
 'use strict';
 
+// Player 1
 const player1 = document.querySelector('#name--1');
-let player1Score = document.querySelector('#score--1');
 let player1CurrentScore = document.querySelector('#current--1');
+let player1Score = 0;
 
+// Player 2
 const player2 = document.getElementById('name--2');
-let player2Score = document.getElementById('score--2');
 let player2CurrentScore = document.getElementById('current--2');
+let player2Score = 0;
 
 const dice = document.querySelector('.dice');
 const holdButton = document.querySelector('.btn--hold');
 let currentScore = 0;
-let player1Turn = true;
 let roll = 1;
+let player1Turn = true;
 
 // player1.textContent = prompt('Enter player 1 name');
 // player2.textContent = prompt('Enter player 2 name');
 
+// To create roll effect
 const sleepNow = delay => new Promise(resolve => setTimeout(resolve, delay));
-
 const switchTurn = boolean => {
   return !boolean;
+};
+
+const hold = () => {
+  if (player1Turn) {
+    player1Score += currentScore;
+    document.getElementById('score--1').textContent = player1Score;
+  } else {
+    player2Score += currentScore;
+    document.querySelector('#score--2').textContent = player2Score;
+  }
+
+  currentScore = 0;
+  player1Turn = switchTurn(player1Turn);
 };
 
 async function rollDice() {
@@ -47,6 +62,7 @@ async function rollDice() {
 }
 
 dice.addEventListener('click', rollDice);
+holdButton.addEventListener('click', hold);
 
 const gameOver = playerScore => {
   if (playerScore >= 100) return true;
