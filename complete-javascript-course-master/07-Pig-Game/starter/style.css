@@ -31,7 +31,7 @@ main {
   backdrop-filter: blur(200px);
   filter: blur();
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.25);
-  border-radius: 9px;
+  border-radius: 10px;
   overflow: hidden;
   display: flex;
 }
@@ -80,7 +80,7 @@ main {
 .current {
   background-color: #12b886;
   opacity: 0.8;
-  border-radius: 9px;
+  border-radius: 10px;
   color: #fff;
   width: 65%;
   padding: 2rem;
@@ -119,7 +119,7 @@ main {
   backdrop-filter: blur(10px);
 
   padding: 0.7rem 2.5rem;
-  border-radius: 50rem;
+  border-radius: 10px;
   box-shadow: 0 1.75rem 3.5rem rgba(0, 0, 0, 0.1);
 }
 
@@ -153,8 +153,11 @@ main {
   left: 50%;
   top: 16.5rem;
   transform: translateX(-50%);
-  height: 10rem;
+  height: 15rem;
   box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+
+  cursor: pointer;
 }
 
 .player--winner {
