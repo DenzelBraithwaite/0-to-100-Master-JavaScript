@@ -1,13 +1,16 @@
 'use strict';
 
 const player1 = document.querySelector('#name--1');
-const player1Score = document.querySelector('#score--1');
+let player1Score = document.querySelector('#score--1');
+let player1CurrentScore = document.querySelector('#current--1');
 
 const player2 = document.getElementById('name--2');
-const player2Score = document.getElementById('score--2');
+let player2Score = document.getElementById('score--2');
+let player2CurrentScore = document.getElementById('current--2');
 
 const dice = document.querySelector('.dice');
-let currentRoll = 0;
+let currentScore = 0;
+let roll = 1;
 
 // player1.textContent = prompt('Enter player 1 name');
 // player2.textContent = prompt('Enter player 2 name');
@@ -15,12 +18,14 @@ let currentRoll = 0;
 const sleepNow = delay => new Promise(resolve => setTimeout(resolve, delay));
 
 async function rollDice() {
-  let roll = Math.ceil(Math.random() * 6);
   for (let i = 0; i <= 5; i++) {
     roll = Math.ceil(Math.random() * 6);
     document.querySelector('.dice').src = `dice-${roll}.webp`;
     await sleepNow(100);
   }
+
+  currentScore += roll;
+  player1CurrentScore.textContent = currentScore;
 }
 
 dice.addEventListener('click', rollDice);
