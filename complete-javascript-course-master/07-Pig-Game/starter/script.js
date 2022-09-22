@@ -9,13 +9,19 @@ let player2Score = document.getElementById('score--2');
 let player2CurrentScore = document.getElementById('current--2');
 
 const dice = document.querySelector('.dice');
+const holdButton = document.querySelector('.btn--hold');
 let currentScore = 0;
+let player1Turn = true;
 let roll = 1;
 
 // player1.textContent = prompt('Enter player 1 name');
 // player2.textContent = prompt('Enter player 2 name');
 
 const sleepNow = delay => new Promise(resolve => setTimeout(resolve, delay));
+
+const switchTurn = boolean => {
+  return !boolean;
+};
 
 async function rollDice() {
   for (let i = 0; i <= 5; i++) {
@@ -24,8 +30,20 @@ async function rollDice() {
     await sleepNow(100);
   }
 
-  currentScore += roll;
-  player1CurrentScore.textContent = currentScore;
+  if (roll === 1) {
+    currentScore = 0;
+    player1Turn = switchTurn(player1Turn);
+  } else {
+    currentScore += roll;
+  }
+
+  if (player1Turn) {
+    player2CurrentScore.textContent = 0;
+    player1CurrentScore.textContent = currentScore;
+  } else {
+    player1CurrentScore.textContent = 0;
+    player2CurrentScore.textContent = currentScore;
+  }
 }
 
 dice.addEventListener('click', rollDice);
