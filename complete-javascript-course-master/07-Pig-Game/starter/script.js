@@ -3,18 +3,22 @@
 // Player 1
 const player1 = document.querySelector('#name--1');
 let player1CurrentScore = document.querySelector('#current--1');
+let player1TotalScore = document.querySelector('#score--1');
 let player1Score = 0;
 
 // Player 2
 const player2 = document.getElementById('name--2');
 let player2CurrentScore = document.getElementById('current--2');
+let player2TotalScore = document.querySelector('#score--2');
 let player2Score = 0;
 
 const dice = document.querySelector('.dice');
-const holdButton = document.querySelector('.btn--hold');
+const holdBtn = document.querySelector('.btn--hold');
+const restartBtn = document.querySelector('.btn--restart');
 let currentScore = 0;
 let roll = 1;
 let player1Turn = true;
+let gameOver = false;
 
 // player1.textContent = prompt('Enter player 1 name');
 // player2.textContent = prompt('Enter player 2 name');
@@ -28,10 +32,16 @@ const switchTurn = boolean => {
 const hold = () => {
   if (player1Turn) {
     player1Score += currentScore;
-    document.getElementById('score--1').textContent = player1Score;
+    player1TotalScore.textContent = player1Score;
+    if (currentScore + player1Score >= 13) {
+      alert('Congrats p1 u win');
+    }
   } else {
     player2Score += currentScore;
-    document.querySelector('#score--2').textContent = player2Score;
+    player2TotalScore.textContent = player2Score;
+    if (currentScore + player1Score >= 13) {
+      alert('Congrats p1 u win');
+    }
   }
 
   currentScore = 0;
@@ -59,16 +69,38 @@ async function rollDice() {
     player1CurrentScore.textContent = 0;
     player2CurrentScore.textContent = currentScore;
   }
+
+  if (player1Turn && currentScore + player1Score >= 13) {
+    player1Score += currentScore;
+    player1TotalScore.textContent = player1Score;
+    currentScore = 0;
+    alert('p1 win');
+    document.body.style.backgroundImage = 'none';
+    document.body.style.backgroundColor = 'red';
+  } else if (!player1Turn && currentScore + player2Score >= 13) {
+    player2Score += currentScore;
+    player2TotalScore.textContent = player2Score;
+    currentScore = 0;
+    alert('p2 win');
+  }
 }
 
-dice.addEventListener('click', rollDice);
-holdButton.addEventListener('click', hold);
+const restart = function () {
+  document.body.style.backgroundImage =
+    'linear-gradient(to top left, #20c997 0%, #c3fae8 100%)';
+  document.body.style.backgroundColor = 'none';
+  document.body.style = 'transition: all 2s ease';
 
-const gameOver = playerScore => {
-  if (playerScore >= 100) return true;
+  player1Turn = true;
+  currentScore = 0;
+  player1Score = 0;
+  player2Score = 0;
+  player1TotalScore.textContent = 0;
+  player1CurrentScore.textContent = 0;
+  player2CurrentScore.textContent = 0;
+  player2TotalScore.textContent = 0;
 };
 
-// Game ends at 100 points
-// Turn ends if current roll is 1 or player holds
-// When player holds, current points get added to score
-// When player rolls 1, current points are lost
+dice.addEventListener('click', rollDice);
+holdBtn.addEventListener('click', hold);
+restartBtn.addEventListener('click', restart);
