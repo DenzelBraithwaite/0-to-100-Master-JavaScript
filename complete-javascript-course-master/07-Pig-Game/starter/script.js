@@ -1,12 +1,14 @@
 'use strict';
 
 // Player 1
+const player1Side = document.querySelector('.player--0');
 const player1Name = document.querySelector('#name--0');
 let player1currentPoints = document.querySelector('#current--0');
 let player1TotalScore = document.querySelector('#score--0');
 let player1Points = 0;
 
 // Player 2
+const player2Side = document.querySelector('.player--1');
 const player2Name = document.getElementById('name--1');
 let player2currentPoints = document.getElementById('current--1');
 let player2TotalScore = document.querySelector('#score--1');
@@ -20,6 +22,13 @@ const restartBtn = document.querySelector('.btn--restart');
 let currentPoints = 0;
 let roll = 1;
 let activePlayer = 0;
+
+// Change player turn handler
+const switchTurn = () => {
+  activePlayer = activePlayer === 0 ? 1 : 0;
+  player1Side.classList.toggle('player--active');
+  player2Side.classList.toggle('player--active');
+};
 
 // To create roll effect
 const sleepNow = delay => new Promise(resolve => setTimeout(resolve, delay));
@@ -42,18 +51,6 @@ async function rollDice() {
   document.querySelector(`#current--${activePlayer}`).textContent =
     currentPoints;
 }
-
-const switchTurn = () => {
-  if (activePlayer) {
-    document.querySelector('.player--1').classList.add('player--active');
-    document.querySelector('.player--2').classList.remove('player--active');
-    activePlayer = 0;
-  } else {
-    document.querySelector('.player--2').classList.add('player--active');
-    document.querySelector('.player--1').classList.remove('player--active');
-    activePlayer = 1;
-  }
-};
 
 const hold = () => {
   if (activePlayer === 0) {
