@@ -62,7 +62,10 @@ const hold = () => {
   document.querySelector(`#score--${activePlayer}`).textContent =
     playerScores[activePlayer];
 
-  if (playerScores[activePlayer] >= 100) {
+  if (playerScores[activePlayer] >= 1) {
+    dice.classList.add('hidden');
+    holdBtn.classList.add('hidden');
+
     document
       .querySelector(`.player--${activePlayer}`)
       .classList.add('player--winner');
@@ -96,6 +99,8 @@ const restart = function () {
   document.querySelector('.player--1').classList.remove('player--winner');
   player1Side.classList.remove('player--loser');
   player2Side.classList.remove('player--loser');
+  dice.classList.remove('hidden');
+  holdBtn.classList.remove('hidden');
 };
 
 dice.addEventListener('click', rollDice);

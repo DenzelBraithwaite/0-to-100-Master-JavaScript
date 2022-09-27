@@ -173,3 +173,7 @@ main {
   font-weight: 700;
   color: #12b886;
 }
+
+.hidden {
+  display: none;
+}
