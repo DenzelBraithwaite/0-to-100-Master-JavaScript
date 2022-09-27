@@ -1,27 +1,27 @@
 'use strict';
 
 // Player 1
-const player1 = document.querySelector('#name--1');
-let player1CurrentScore = document.querySelector('#current--1');
+const player1Name = document.querySelector('#name--1');
+let player1currentPoints = document.querySelector('#current--1');
 let player1TotalScore = document.querySelector('#score--1');
-let player1Score = 0;
+let player1Points = 0;
 
 // Player 2
-const player2 = document.getElementById('name--2');
-let player2CurrentScore = document.getElementById('current--2');
+const player2Name = document.getElementById('name--2');
+let player2currentPoints = document.getElementById('current--2');
 let player2TotalScore = document.querySelector('#score--2');
-let player2Score = 0;
+let player2Points = 0;
 
 const dice = document.querySelector('.dice');
 const holdBtn = document.querySelector('.btn--hold');
 const restartBtn = document.querySelector('.btn--restart');
-let currentScore = 0;
+let currentPoints = 0;
 let roll = 1;
 let player1Turn = true;
-let gameOver = false;
+// let gameOver = false;
 
-// player1.textContent = prompt('Enter player 1 name');
-// player2.textContent = prompt('Enter player 2 name');
+// player1Name.textContent = prompt('Enter player 1 name');
+// player2Name.textContent = prompt('Enter player 2 name');
 
 // To create roll effect
 const sleepNow = delay => new Promise(resolve => setTimeout(resolve, delay));
@@ -31,21 +31,28 @@ const switchTurn = boolean => {
 
 const hold = () => {
   if (player1Turn) {
-    player1Score += currentScore;
-    player1TotalScore.textContent = player1Score;
-    if (currentScore + player1Score >= 13) {
-      alert('Congrats p1 u win');
-    }
+    player1Points += currentPoints;
+    player1TotalScore.textContent = player1Points;
   } else {
-    player2Score += currentScore;
-    player2TotalScore.textContent = player2Score;
-    if (currentScore + player1Score >= 13) {
-      alert('Congrats p1 u win');
-    }
+    player2Points += currentPoints;
+    player2TotalScore.textContent = player2Points;
   }
 
-  currentScore = 0;
+  currentPoints = 0;
   player1Turn = switchTurn(player1Turn);
+};
+
+const restart = function () {
+  document.querySelector('body').style.backgroundImage =
+    'linear-gradient(to top left, #20c997 0%, #c3fae8 100%)';
+  player1Turn = true;
+  currentPoints = 0;
+  player1Points = 0;
+  player2Points = 0;
+  player1TotalScore.textContent = 0;
+  player1currentPoints.textContent = 0;
+  player2currentPoints.textContent = 0;
+  player2TotalScore.textContent = 0;
 };
 
 async function rollDice() {
@@ -56,50 +63,32 @@ async function rollDice() {
   }
 
   if (roll === 1) {
-    currentScore = 0;
+    currentPoints = 0;
     player1Turn = switchTurn(player1Turn);
   } else {
-    currentScore += roll;
+    currentPoints += roll;
   }
 
   if (player1Turn) {
-    player2CurrentScore.textContent = 0;
-    player1CurrentScore.textContent = currentScore;
+    player2currentPoints.textContent = 0;
+    player1currentPoints.textContent = currentPoints;
   } else {
-    player1CurrentScore.textContent = 0;
-    player2CurrentScore.textContent = currentScore;
+    player1currentPoints.textContent = 0;
+    player2currentPoints.textContent = currentPoints;
   }
 
-  if (player1Turn && currentScore + player1Score >= 13) {
-    player1Score += currentScore;
-    player1TotalScore.textContent = player1Score;
-    currentScore = 0;
-    alert('p1 win');
-    document.body.style.backgroundImage = 'none';
-    document.body.style.backgroundColor = 'red';
-  } else if (!player1Turn && currentScore + player2Score >= 13) {
-    player2Score += currentScore;
-    player2TotalScore.textContent = player2Score;
-    currentScore = 0;
-    alert('p2 win');
+  if (player1Turn && currentPoints + player1Points >= 30) {
+    player1Points += currentPoints;
+    player1TotalScore.textContent = player1Points;
+    document.querySelector('body').style.backgroundImage =
+      'linear-gradient(to top left, red 0%, blue 100%)';
+  } else if (!player1Turn && currentPoints + player2Points >= 30) {
+    player2Points += currentPoints;
+    player2TotalScore.textContent = player2Points;
+    document.body.style.backgroundImage =
+      'linear-gradient(to top left, red 0%, blue 100%)';
   }
 }
-
-const restart = function () {
-  document.body.style.backgroundImage =
-    'linear-gradient(to top left, #20c997 0%, #c3fae8 100%)';
-  document.body.style.backgroundColor = 'none';
-  document.body.style = 'transition: all 2s ease';
-
-  player1Turn = true;
-  currentScore = 0;
-  player1Score = 0;
-  player2Score = 0;
-  player1TotalScore.textContent = 0;
-  player1CurrentScore.textContent = 0;
-  player2CurrentScore.textContent = 0;
-  player2TotalScore.textContent = 0;
-};
 
 dice.addEventListener('click', rollDice);
 holdBtn.addEventListener('click', hold);
