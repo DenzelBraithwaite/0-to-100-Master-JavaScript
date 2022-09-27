@@ -62,7 +62,7 @@ const hold = () => {
   document.querySelector(`#score--${activePlayer}`).textContent =
     playerScores[activePlayer];
 
-  if (playerScores[activePlayer] >= 1) {
+  if (playerScores[activePlayer] >= 100) {
     dice.classList.add('hidden');
     holdBtn.classList.add('hidden');
 
