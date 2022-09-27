@@ -12,49 +12,17 @@ let player2currentPoints = document.getElementById('current--1');
 let player2TotalScore = document.querySelector('#score--1');
 let player2Points = 0;
 
+// Game controls / buttons
 const dice = document.querySelector('.dice');
 const holdBtn = document.querySelector('.btn--hold');
 const restartBtn = document.querySelector('.btn--restart');
+
 let currentPoints = 0;
 let roll = 1;
 let activePlayer = 0;
 
-// player1Name.textContent = prompt('Enter player 1 name');
-// player2Name.textContent = prompt('Enter player 2 name');
-
-const switchTurn = () => {
-  return activePlayer ? (activePlayer = 0) : (activePlayer = 1);
-};
-
 // To create roll effect
 const sleepNow = delay => new Promise(resolve => setTimeout(resolve, delay));
-
-const hold = () => {
-  if (activePlayer === 0) {
-    player1Points += currentPoints;
-    player1TotalScore.textContent = player1Points;
-  } else {
-    player2Points += currentPoints;
-    player2TotalScore.textContent = player2Points;
-  }
-
-  currentPoints = 0;
-  document.querySelector(`#current--${activePlayer}`).textContent = 0;
-  switchTurn();
-};
-
-const restart = function () {
-  document.querySelector('body').style.backgroundImage =
-    'linear-gradient(to top left, #20c997 0%, #c3fae8 100%)';
-  activePlayer = 0;
-  currentPoints = 0;
-  player1Points = 0;
-  player2Points = 0;
-  player1TotalScore.textContent = 0;
-  player1currentPoints.textContent = 0;
-  player2currentPoints.textContent = 0;
-  player2TotalScore.textContent = 0;
-};
 
 async function rollDice() {
   for (let i = 0; i <= 5; i++) {
@@ -73,19 +41,49 @@ async function rollDice() {
 
   document.querySelector(`#current--${activePlayer}`).textContent =
     currentPoints;
+}
 
-  if (!activePlayer && currentPoints + player1Points >= 30) {
+const switchTurn = () => {
+  if (activePlayer) {
+    document.querySelector('.player--1').classList.add('player--active');
+    document.querySelector('.player--2').classList.remove('player--active');
+    activePlayer = 0;
+  } else {
+    document.querySelector('.player--2').classList.add('player--active');
+    document.querySelector('.player--1').classList.remove('player--active');
+    activePlayer = 1;
+  }
+};
+
+const hold = () => {
+  if (activePlayer === 0) {
     player1Points += currentPoints;
     player1TotalScore.textContent = player1Points;
-    document.querySelector('body').style.backgroundImage =
-      'linear-gradient(to top left, red 0%, blue 100%)';
-  } else if (activePlayer && currentPoints + player2Points >= 30) {
+  } else {
     player2Points += currentPoints;
     player2TotalScore.textContent = player2Points;
-    document.body.style.backgroundImage =
-      'linear-gradient(to top left, red 0%, blue 100%)';
   }
-}
+
+  currentPoints = 0;
+  document.querySelector(`#current--${activePlayer}`).textContent = 0;
+  switchTurn();
+};
+
+const restart = function () {
+  activePlayer = 0;
+  currentPoints = 0;
+  player1Points = 0;
+  player2Points = 0;
+  player1TotalScore.textContent = 0;
+  player1currentPoints.textContent = 0;
+  player2currentPoints.textContent = 0;
+  player2TotalScore.textContent = 0;
+
+  document.querySelector('body').style.backgroundImage =
+    'linear-gradient(to top left, #20c997 0%, #c3fae8 100%)';
+  document.querySelector('.player--1').classList.add('player--active');
+  document.querySelector('.player--2').classList.remove('player--active');
+};
 
 dice.addEventListener('click', rollDice);
 holdBtn.addEventListener('click', hold);
