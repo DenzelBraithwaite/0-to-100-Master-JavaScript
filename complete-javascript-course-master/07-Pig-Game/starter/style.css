@@ -166,12 +166,26 @@ main {
 }
 
 .player--loser {
-  background-color: rgba(255, 98, 98, 0.5);
+  background-color: #ff626280;
 }
 
 .player--winner .name {
   font-weight: 700;
   color: #12b886;
+}
+
+.player--loser .name {
+  color: #bd0505;
+}
+
+.player--loser #score--0,
+.player--loser #score--1 {
+  color: #bd0505;
+}
+
+.player--loser .current,
+.player--loser .current {
+  background-color: #b02626;
 }
 
 .hidden {
